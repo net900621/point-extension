@@ -50,11 +50,12 @@ const SendDom = () => {
     window.removeEventListener("click", clickEvent)
     if (hailingFrequency === "true") {
       const eventList = JSON.parse(localStorage.getItem("event-point") || "[]")
-      console.log(eventList, 33333)
       eventList.length &&
         eventList.forEach((v) => {
           document.querySelector(v.key).onclick = () => {
-            console.log(v.event)
+            // TODO
+            // 增肌埋点逻辑并替换
+            alert(v.event)
           }
         })
     } else {
