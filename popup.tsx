@@ -1,27 +1,27 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+import { Storage } from "@plasmohq/storage"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
+  const [data, setData] = useState<boolean>(false)
+  const storage = new Storage()
+  useEffect(() => {
+    storage.set("hailing", "true")
+  }, [])
+  const onChangeValue = async (e) => {
+    setData((e) => !e)
+    await storage.set("hailing", data ? "true" : "false")
+  }
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
+        width: 200
       }}>
-      <h2>
-        Welcome to your
-        <a href="https://www.plasmo.com" target="_blank">
-          {" "}
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+      <h2>请选择模式</h2>
+      <div onChange={onChangeValue}>
+        <input type="radio" value="0" name="point" checked={!data} /> 埋点
+        <input type="radio" value="1" name="point" checked={data} /> 配置
+      </div>
     </div>
   )
 }
